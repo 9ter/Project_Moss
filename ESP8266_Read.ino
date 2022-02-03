@@ -13,6 +13,7 @@
 
 
 #include <Adafruit_Fingerprint.h>
+#include <TridentTD_LineNotify.h>
 
 // On Leonardo/Micro or others with hardware serial, use those! #0 is green wire, #1 is white
 // uncomment this line:
@@ -29,6 +30,7 @@
 
 const char* ssid = "";
 const char* password = "";
+#define LINE_TOKEN  "xxxxxxx"
 
 const char* host = "192.168.1.83";
 const int httpPort = 4000;
@@ -41,6 +43,8 @@ Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
 void setup()
 {
+  
+  LINE.setToken(LINE_TOKEN);
 
   Serial.begin(9600);
   while (!Serial);  // For Yun/Leo/Micro/Zero/...
@@ -177,9 +181,9 @@ int getFingerprintIDez() {
 
 
   if (finger.fingerID == 1) {
-    client_send("req,1,yes");
-    delay(500);
-    client_send("req,2,no");
+     //LINE.notify("นางสาวมอส มาแล้วค่ะ!!");
+     client_send("id,1");
+     
   }
   if (finger.fingerID == 2) {
     client_send("req,2,yes");
